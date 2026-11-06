@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CivicPath AI — Civic Task Navigator</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- LOGIN PAGE -->
+<section id="authPage" class="auth-page">
+
+    <div class="auth-container">
+
+        <div class="auth-left">
+            <div class="auth-logo">CP</div>
+
+            <h1>Welcome to CivicPath.</h1>
+
+            <p>
+                Government procedures shouldn't be complicated.
+                Your journey towards simpler civic services starts here.
+            </p>
+
+            <div class="auth-features">
+                <p>✓ Step-by-step government procedures</p>
+                <p>✓ Document and application tracking</p>
+                <p>✓ AI-powered civic assistance</p>
+                <p>✓ Verified government resources</p>
+            </div>
+        </div>
+
+        <div class="auth-right">
+
+            <div class="auth-tabs">
+                <button id="loginTab" class="auth-tab active"
+                    onclick="switchAuth('login')">
+                    Login
+                </button>
+
+                <button id="signupTab" class="auth-tab"
+                    onclick="switchAuth('signup')">
+                    Sign Up
+                </button>
+            </div>
+
+            <div id="loginForm">
+
+                <h2>Welcome back!</h2>
+                <p>Login to continue your civic journey.</p>
+
+                <form onsubmit="handleLogin(event)">
+
+                    <label>Email Address</label>
+                    <input type="email" id="loginEmail"
+                        placeholder="Enter your email" required>
+
+                    <label>Password</label>
+                    <input type="password" id="loginPassword"
+                        placeholder="Enter your password" required>
+
+                    <button type="submit" class="auth-submit">
+                        Login →
+                    </button>
+
+                </form>
+
+                <p id="loginError" class="auth-error"></p>
+
+            </div>
+
+            <div id="signupForm" class="hidden">
+
+                <h2>Create your account</h2>
+                <p>Join CivicPath and simplify your civic tasks.</p>
+
+                <form onsubmit="handleSignup(event)">
+
+                    <label>Full Name</label>
+                    <input type="text" id="signupName"
+                        placeholder="Your name" required>
+
+                    <label>Email Address</label>
+                    <input type="email" id="signupEmail"
+                        placeholder="Your email" required>
+
+                    <label>Password</label>
+                    <input type="password" id="signupPassword"
+                        placeholder="Create password"
+                        minlength="8" required>
+
+                    <label>Confirm Password</label>
+                    <input type="password" id="confirmPassword"
+                        placeholder="Confirm password" required>
+
+                    <button type="submit" class="auth-submit">
+                        Create Account →
+                    </button>
+
+                </form>
+
+                <p id="signupError" class="auth-error"></p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<div id="appShell" class="hidden">
+
+
+<div class="app">
+
+  <!-- ================= HEADER ================= -->
+
+  <header class="navbar">
+
+    <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+      <div class="logo-icon">CP</div>
+
+      <div>
+        <strong>CivicPath</strong>
+        <small>AI Civic Navigator</small>
+      </div>
+    </div>
+
+    <nav>
+      <a href="#start">Start</a>
+      <a href="#roadmapSection">Roadmap</a>
+      <a href="#features">Features</a>
+
+      <button class="admin-btn" onclick="openAdmin()">
+        ⚙ Admin
+      </button>
+      <button class="admin-btn" onclick="logoutCivicPath()">
+    Logout
+</button>
+    </nav>
+
+  </header>
+
+
+  <!-- ================= HERO ================= -->
+
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <div class="eyebrow">
+        <span></span>
+        HACKATHON PROTOTYPE · INDIA
+      </div>
+
+      <h1>
+        Government processes,
+        <span>finally mapped.</span>
+      </h1>
+
+      <p>
+        Tell CivicPath what you want to do.
+        Our intelligent civic navigator converts complicated government
+        procedures into simple, step-by-step actions.
+      </p>
+
+      <div class="hero-tags">
+        <span>✦ AI Assistant</span>
+        <span>↳ Dependency Mapping</span>
+        <span>✓ Smart Roadmap</span>
+        <span>🇮🇳 All India</span>
+      </div>
+
+    </div>
+
+
+    <div class="hero-visual">
+
+      <div class="floating-card card-one">
+        <div class="mini-icon">✓</div>
+        <div>
+          <b>Document ready</b>
+          <small>Identity proof</small>
+        </div>
+      </div>
+
+      <div class="journey-card">
+
+        <div class="journey-title">
+          YOUR CIVIC JOURNEY
+          <span>LIVE</span>
+        </div>
+
+        <div class="journey-step active">
+          <b>01</b>
+          Prepare documents
+        </div>
+
+        <div class="journey-line"></div>
+
+        <div class="journey-step">
+          <b>02</b>
+          Submit application
+        </div>
+
+        <div class="journey-line"></div>
+
+        <div class="journey-step">
+          <b>03</b>
+          Verification
+        </div>
+
+      </div>
+
+      <div class="floating-card card-two">
+        <div class="mini-icon">⚡</div>
+        <div>
+          <b>2 tasks</b>
+          <small>can run in parallel</small>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= MAIN ================= -->
+
+  <main>
+
+    <!-- START -->
+
+    <section class="command-card" id="start">
+
+      <div class="section-label">
+        01 · TELL US WHAT YOU NEED
+      </div>
+
+      <div class="command-header">
+
+        <div>
+          <h2>Build my civic roadmap</h2>
+
+          <p>
+            Describe your task and CivicPath will create an action plan.
+          </p>
+        </div>
+
+        <span class="smart-pill">
+          ● Smart intake
+        </span>
+
+      </div>
+
+
+      <!-- NATURAL LANGUAGE -->
+
+      <div class="prompt-box">
+
+        <div class="prompt-symbol">⌕</div>
+
+        <textarea
+          id="naturalTask"
+          placeholder="Example: I want to open a small restaurant in Navi Mumbai..."
+        ></textarea>
+
+        <button onclick="useExample()">
+          Try example
+        </button>
+
+      </div>
+
+
+      <!-- FORM -->
+
+      <div class="form-grid">
+
+        <label>
+          Task category
+
+          <select id="taskType">
+
+            <option value="restaurant">
+              Open Restaurant / Food Business
+            </option>
+
+            <option value="business">
+              Register Business / Shop
+            </option>
+
+            <option value="event">
+              Organize Public / College Event
+            </option>
+
+            <option value="property">
+              Property / Building Task
+            </option>
+
+            <option value="trade">
+              Trade / Local Permission
+            </option>
+
+          </select>
+
+        </label>
+
+
+        <!-- STATE SEARCH -->
+
+        <label>
+          State / Union Territory
+
+          <div class="state-search">
+
+            <input
+              id="stateSearch"
+              type="text"
+              placeholder="Search any Indian state or UT..."
+              autocomplete="off"
+              oninput="filterStates()"
+              onclick="toggleStateMenu()"
+            >
+
+            <span>⌄</span>
+
+            <div id="stateMenu" class="state-menu"></div>
+
+          </div>
+
+        </label>
+
+
+        <label>
+          City / District
+
+          <input
+            id="city"
+            placeholder="e.g. Navi Mumbai"
+          >
+
+        </label>
+
+
+        <label>
+          Applicant type
+
+          <select id="applicantType">
+
+            <option>Individual</option>
+            <option>Partnership</option>
+            <option>Company / LLP</option>
+            <option>Student / College Group</option>
+            <option>NGO / Community Group</option>
+
+          </select>
+
+        </label>
+
+      </div>
+
+
+      <div class="options-row">
+
+        <label class="checkbox">
+          <input type="checkbox" id="existingReg">
+          <span></span>
+          Already have a registration / licence
+        </label>
+
+        <label class="checkbox">
+          <input type="checkbox" id="urgentMode">
+          <span></span>
+          Show urgent steps first
+        </label>
+
+        <button class="generate-btn" onclick="generateRoadmap()">
+          Generate Roadmap
+          <b>→</b>
+        </button>
+
+      </div>
+
+      <div class="state-message" id="stateHint">
+        🇮🇳 Select a state or UT to personalize your roadmap.
+      </div>
+
+    </section>
+
+
+    <!-- ================= ROADMAP ================= -->
+
+    <section id="roadmapSection" class="workspace hidden">
+
+      <aside class="sidebar">
+
+        <div class="roadmap-status">
+          <span></span>
+          ROADMAP READY
+        </div>
+
+        <h2 id="roadmapTitle">
+          Your Roadmap
+        </h2>
+
+        <p id="roadmapSubtitle">
+          Your personalized civic journey.
+        </p>
+
+
+        <div class="progress-card">
+
+          <div>
+            <small>COMPLETION</small>
+            <strong id="progressText">0%</strong>
+          </div>
+
+          <div class="progress-circle" id="progressRing">
+            0%
+          </div>
+
+        </div>
+
+
+        <div class="quick-tools">
+
+          <button onclick="checkDocuments()">
+            <span>📄</span>
+            Document readiness
+            <b>›</b>
+          </button>
+
+          <button onclick="showDependencyGraph()">
+            <span>🔗</span>
+            Dependency map
+            <b>›</b>
+          </button>
+
+          <button onclick="showParallelTasks()">
+            <span>⚡</span>
+            Parallel opportunities
+            <b>›</b>
+          </button>
+
+          <button onclick="showBackwardFlow()">
+            <span>↩</span>
+            Trace prerequisites
+            <b>›</b>
+          </button>
+
+          <button onclick="translateJargon()">
+            <span>Aa</span>
+            Plain-language mode
+            <b>›</b>
+          </button>
+
+        </div>
+
+
+        <div class="trust-box">
+
+          <b>🛡 Source-aware</b>
+
+          <p>
+            The production version can connect every requirement
+            to its official government source.
+          </p>
+
+          <small>● DEMO DATA</small>
+
+        </div>
+
+      </aside>
+
+
+      <div class="roadmap-content">
+
+        <div class="roadmap-header">
+
+          <div>
+
+            <span class="section-label">
+              02 · ACTION PLAN
+            </span>
+
+            <h2>
+              From start to approval
+            </h2>
+
+          </div>
+
+          <div class="roadmap-actions">
+
+            <button onclick="downloadPlan()">
+              ⇩ Export
+            </button>
+
+            <button onclick="resetRoadmap()">
+              ↻ New Task
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="smart-banner">
+
+          <div>
+            ✨
+            <b>Smart insight</b>
+
+            <span id="smartInsight">
+              We are mapping prerequisites so you know what must happen first.
+            </span>
+          </div>
+
+          <button onclick="explainOrder()">
+            Why this order?
+          </button>
+
+        </div>
+
+
+        <div class="risk-strip">
+
+          <span>🛡</span>
+
+          <b>Don't get stuck:</b>
+
+          <span id="riskText">
+            Complete locked prerequisites before submitting.
+          </span>
+
+          <strong id="riskCount">
+            0 blockers
+          </strong>
+
+        </div>
+
+
+        <div id="roadmap" class="roadmap"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= FEATURES ================= -->
+
+    <section class="features" id="features">
+
+      <span class="section-label">
+        03 · WHY CIVICPATH
+      </span>
+
+      <h2>
+        Built for the messy reality of civic procedures.
+      </h2>
+
+      <div class="feature-grid">
+
+        <article>
+          <div>01</div>
+          <h3>Dependency-first</h3>
+          <p>
+            See what needs to happen before each action.
+          </p>
+        </article>
+
+        <article>
+          <div>02</div>
+          <h3>AI Assistant</h3>
+          <p>
+            Ask questions about your task in normal language.
+          </p>
+        </article>
+
+        <article>
+          <div>03</div>
+          <h3>Document Intelligence</h3>
+          <p>
+            Understand what documents you need before applying.
+          </p>
+        </article>
+
+        <article>
+          <div>04</div>
+          <h3>Admin Intelligence</h3>
+          <p>
+            Review procedures, conflicts and source freshness.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ================= AI CHATBOT ================= -->
+
+  <button
+    class="chat-launcher"
+    id="chatLauncher"
+    onclick="toggleChat()"
+  >
+
+    <div class="chat-icon">
+      ✦
+    </div>
+
+    <div class="chat-launcher-text">
+      <b>CivicPath AI</b>
+      <small>Ask about your civic task</small>
+    </div>
+
+    <strong>AI</strong>
+
+  </button>
+
+
+  <aside class="chat-panel" id="chatPanel">
+
+    <div class="chat-header">
+
+      <div class="chat-agent">
+
+        <div class="agent-avatar">
+          ✦
+        </div>
+
+        <div>
+          <b>CivicPath AI</b>
+
+          <small>
+            <span></span>
+            Civic procedure assistant
+          </small>
+        </div>
+
+      </div>
+
+      <div class="chat-buttons">
+
+        <button onclick="clearChat()">
+          ↻
+        </button>
+
+        <button onclick="toggleChat()">
+          ×
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="chat-context">
+
+      <small>ROADMAP CONTEXT</small>
+
+      <b id="chatContextText">
+        No roadmap generated yet
+      </b>
+
+    </div>
+
+
+    <div class="chat-messages" id="chatMessages">
+
+      <div class="bot-message">
+
+        <div class="message-avatar">
+          ✦
+        </div>
+
+        <div>
+
+          <b>CivicPath AI</b>
+
+          <p>
+            Hi! 👋 I'm your civic task assistant.
+            Tell me what you're trying to do and I can explain
+            the roadmap, documents, dependencies and next steps.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="suggestions">
+
+      <button onclick="askSuggestion('What documents do I need?')">
+        📄 Documents
+      </button>
+
+      <button onclick="askSuggestion('Explain my roadmap simply')">
+        🧭 Explain roadmap
+      </button>
+
+      <button onclick="askSuggestion('Which tasks can I do in parallel?')">
+        ⚡ Parallel tasks
+      </button>
+
+      <button onclick="askSuggestion('How can I avoid rejection?')">
+        🛡 Avoid rejection
+      </button>
+
+    </div>
+
+
+    <form class="chat-input" onsubmit="sendChat(event)">
+
+      <textarea
+        id="chatInput"
+        rows="1"
+        placeholder="Ask CivicPath AI..."
+      ></textarea>
+
+      <button id="chatSend">
+        ↑
+      </button>
+
+    </form>
+
+
+    <div class="chat-footer">
+      AI guidance should be verified against official government sources.
+    </div>
+
+  </aside>
+
+
+  <!-- ================= MODAL ================= -->
+
+  <div class="modal hidden" id="modal">
+
+    <div class="modal-card">
+
+      <button class="modal-close" onclick="closeModal()">
+        ×
+      </button>
+
+      <div id="modalContent"></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================= ADMIN ================= -->
+
+  <section class="admin-section hidden" id="adminSection">
+
+    <div class="admin-container">
+
+      <div class="admin-header">
+
+        <div>
+
+          <span class="section-label">
+            ADMIN CONSOLE
+          </span>
+
+          <h2>
+            Procedure Intelligence
+          </h2>
+
+          <p>
+            Review and monitor the civic knowledge layer.
+          </p>
+
+        </div>
+
+        <button onclick="closeAdmin()">
+          Close ×
+        </button>
+
+      </div>
+
+
+      <div class="admin-stats">
+
+        <div>
+          <small>ROADMAP STEPS</small>
+          <b id="adminSteps">—</b>
+        </div>
+
+        <div>
+          <small>SOURCE HEALTH</small>
+          <b>92%</b>
+        </div>
+
+        <div>
+          <small>FLAGGED</small>
+          <b>03</b>
+        </div>
+
+        <div>
+          <small>LAST SCAN</small>
+          <b>Just now</b>
+        </div>
+
+      </div>
+
+
+      <div class="admin-grid">
+
+        <article>
+          <span>🔎</span>
+          <h3>Source freshness</h3>
+          <p>Find steps that require verification.</p>
+          <button onclick="adminFreshness()">Run check →</button>
+        </article>
+
+        <article>
+          <span>⚠</span>
+          <h3>Conflict monitor</h3>
+          <p>Find differences between sources.</p>
+          <button onclick="adminConflicts()">Review →</button>
+        </article>
+
+        <article>
+          <span>✓</span>
+          <h3>Step validation</h3>
+          <p>Approve or edit procedure steps.</p>
+          <button onclick="adminReview()">Review →</button>
+        </article>
+
+        <article>
+          <span>↻</span>
+          <h3>Change monitor</h3>
+          <p>Scan for changed requirements.</p>
+          <button onclick="adminChanges()">Scan →</button>
+        </article>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer>
+
+    <b>CivicPath</b>
+
+    <span>
+      Municipal Bureaucracy Path Visualizer
+    </span>
+
+    <span>
+      India · Hackathon Prototype
+    </span>
+
+  </footer>
+
+</div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
